@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Boarding for Kat's Animals</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+      width: 100%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* Items wrapper */
+    #itemsContainer {
+      width: 100%;
+    }
+    .link-item {
+      margin: 20px auto;
+      text-align: center;
+      width: 250px;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
+    .zoomable-image {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      cursor: zoom-in;
+    }
+    .description {
+      color: white;
+      text-decoration: underline;
+      font-size: 16px;
+      margin-top: 10px;
+      display: block;
+      cursor: pointer;
+    }
+    .image-description {
+      color: white;
+      margin-top: 10px;
+      font-size: 14px;
+      font-style: italic;
+      max-width: 300px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    /* Modal styles */
+    .modal, .website-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content-container {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      overflow: hidden;
+    }
+    .modal-content {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .link-item a {
+      color: white;
+      text-decoration: none;
+      font-size: 20px;
+      margin-top: 10px;
+      display: block;
+      cursor: pointer;
+    }
+    h1 {
+      text-align: center;
+      font-size: 30px;
+    }
+    .website-content {
+      position: relative;
+      width: 80%;
+      height: 80%;
+      display: flex;
+      flex-direction: column;
+      background-color: black;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .go-to-website-button {
+      background-color: white;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      align-self: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      transition: background-color 0.3s ease;
+    }
+    .go-to-website-button:hover {
+      background-color: #f0f0f0;
+    }
+    /* Pagination controls */
+    .pagination {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+    }
+    .pagination button {
+      background-color: #444;
+      color: white;
+      border: none;
+      margin: 0 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .pagination button.active {
+      background-color: #00aced;
+    }
+    .pagination button:hover {
+      background-color: #00aced;
+    }
+    /* Link to admin page */
+    .admin-link {
+      margin: 20px auto;
+      display: block;
+      font-size: 18px;
+      color: #00aced;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pet Boarding for Kat's Animals</h1>
+     
+    <!-- Items container: all link items (both static and dynamic) are placed here -->
+    <div id="itemsContainer">
+      <!-- Static items defined in the code -->
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image1.png')">
+          <img src="resources/image1.png" alt="Image 13" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://furbabiespetresort.com/cat-boarding/')">Fur Babies</a>
+        <div class="image-description">Cattery is $35 ($28 - 2nd cat in same condo), multiple pets 20% off. Daycare - $35 for full day, $140 - 5 day pass, 250 - 10 day pass, $460 - 20 day pass. They got a contact form and their number on the website.</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image2.png')">
+          <img src="resources/image2.png" alt="Image 2" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://greenville.fetchpetcare.com/')">Visit Fetch Pet Care</a>
+        <div class="image-description">Starts at $27 for 30 minutes - "includes  indoor exercise, play, feeding, litter/cage cleaning, yard waste cleanup, and home care within a 30-minute period".</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image3.png')">
+          <img src="resources/image3.png" alt="Image 3" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://connected-pets.com/')">Visit Connected Pets</a>
+        <div class="image-description">15 minutes $16,75, 30 minutes $27.50, 1 hour 37.50 - They add $3 per pet and $4 for early morning/late evening.</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image4.png')">
+          <img src="resources/image4.png" alt="Image 4" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://petservicesplus.us/services')">Visit Pet Services Plus</a>
+        <div class="image-description">$25,00 per 30 minutes fee includes first 2 pets, $5 for additional pets.</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image5.png')">
+          <img src="resources/image5.png" alt="Image 5" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://www.aboveandbeyondpetsitting.com/')">Visit Above and Beyond Pet Sitting</a>
+        <div class="image-description">No price on these dudes, just put it here cus it's an option.</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image6.png')">
+          <img src="resources/image6.png" alt="Image 6" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://taylorshappyhome.com/services/')">Visit Taylor's Happy Home</a>
+        <div class="image-description">Available 24/7, 30 minutes 1-2 pets $22, 1 hour 1-2 pets $32. 30 minutes 3-4 pets $25, 1 hour 3-4 pets 35$.</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image7.png')">
+          <img src="resources/image7.png" alt="Image 7" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://happypawsupstate.com/pet-sitting')">Visit Happy Paws Upstate</a>
+        <div class="image-description">They do all pets, they do drop in visits and 1 hour visits, they could even do Naga, goes for $22 to $35 not sure if per pet.</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image8.png')">
+          <img src="resources/image8.png" alt="Image 8" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://www.paws-upgvl.com/pet-sitting-services')">Visit Paws Up GVL</a>
+        <div class="image-description">1 visit per day is $30 they offer a lot of services.</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image9.png')">
+          <img src="resources/image9.png" alt="Image 9" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://caseyspetsitting.com/')">Visit Casey's Pet Sitting</a>
+        <div class="image-description">No price for this one, not sure if only does dogs, left it here because it's an option.</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image10.png')">
+          <img src="resources/image10.png" alt="Image 10" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://www.cuddly-critters.com/')">Visit Cuddly Critters</a>
+        <div class="image-description">For pet sitting 30 minutes $24, 60 minutes $34.</div>
+      </div>
+      <div class="link-item">
+        <div class="image-container" onclick="openImageModal('resources/image12.png')">
+          <img src="resources/image12.png" alt="Image 12" class="zoomable-image">
+        </div>
+        <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('https://www.petparadise.com/')">Visit Pet Paradise</a>
+        <div class="image-description">1st cat $37 per day, 2nd cat $31 per day.</div>
+      </div>
+    </div>
+    
+    <!-- Pagination controls -->
+    <div class="pagination" id="pagination"></div>
+
+    <!-- Modal for Image Preview -->
+    <div id="imageModal" class="modal" onclick="closeImageModal(event)">
+      <div class="modal-content-container">
+        <img class="modal-content" id="modalImage" onclick="zoomImage(event)" draggable="false">
+      </div>
+    </div>
+
+    <!-- Modal for Website Preview -->
+    <div id="websiteModal" class="website-modal" onclick="closeWebsiteModal(event)">
+      <div class="website-content">
+        <iframe id="websiteIframe" src="" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+        <button class="go-to-website-button" id="goToWebsiteButton" onclick="goToWebsite(event)">Go to Website</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Pagination: allow 5 items per page
+    const itemsPerPage = 5;
+    const items = document.querySelectorAll('#itemsContainer .link-item');
+    const totalItems = items.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const paginationContainer = document.getElementById('pagination');
+    let currentPage = 1;
+
+    function showPage(page) {
+      currentPage = page;
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      items.forEach((item, index) => {
+        item.style.display = (index >= start && index < end) ? 'block' : 'none';
+      });
+      updatePagination();
+    }
+
+    function updatePagination() {
+      paginationContainer.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        if (i === currentPage) {
+          btn.classList.add('active');
+        }
+        btn.addEventListener('click', () => showPage(i));
+        paginationContainer.appendChild(btn);
+      }
+    }
+
+    // Load extra items from localStorage (if any)
+    function loadExtraItems() {
+      const extraItems = JSON.parse(localStorage.getItem('extraItems')) || [];
+      const container = document.getElementById('itemsContainer');
+      extraItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'link-item';
+        div.innerHTML = `
+          <div class="image-container" onclick="openImageModal('${item.imageUrl}')">
+            <img src="${item.imageUrl}" alt="Extra Item" class="zoomable-image">
+          </div>
+          <a href="#" class="description" onclick="event.stopPropagation(); openWebsiteModal('${item.linkUrl}')">${item.title}</a>
+          <div class="image-description">${item.description}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Initialize
+    loadExtraItems();
+    showPage(1);
+
+    // Modal and zoom functions
+    let isZoomed = false;
+    let zoomScale = 1;
+
+    function openImageModal(imageSrc) {
+      const modalImage = document.getElementById('modalImage');
+      modalImage.src = imageSrc;
+      document.getElementById('imageModal').style.display = 'flex';
+    }
+
+    function closeImageModal(event) {
+      if (event.target === document.getElementById('imageModal')) {
+        document.getElementById('imageModal').style.display = 'none';
+        resetZoom();
+      }
+    }
+
+    function zoomImage(event) {
+      event.stopPropagation();
+      const modalImage = document.getElementById('modalImage');
+      const rect = modalImage.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+      if (!isZoomed) {
+        modalImage.style.transformOrigin = `${mouseX}px ${mouseY}px`;
+        modalImage.style.transform = `scale(2)`;
+        zoomScale = 2;
+        modalImage.style.cursor = 'zoom-out';
+        isZoomed = true;
+      } else {
+        resetZoom();
+      }
+    }
+
+    function resetZoom() {
+      isZoomed = false;
+      zoomScale = 1;
+      const modalImage = document.getElementById('modalImage');
+      modalImage.style.transform = `scale(1)`;
+      modalImage.style.cursor = 'zoom-in';
+      modalImage.style.transformOrigin = 'center center';
+    }
+
+    function openWebsiteModal(url) {
+      const websiteModal = document.getElementById('websiteModal');
+      const iframe = document.getElementById('websiteIframe');
+      iframe.src = url;
+      websiteModal.style.display = 'flex';
+      document.getElementById('goToWebsiteButton').setAttribute('data-url', url);
+    }
+
+    function closeWebsiteModal(event) {
+      if (event.target === document.getElementById('websiteModal')) {
+        document.getElementById('websiteModal').style.display = 'none';
+        document.getElementById('websiteIframe').src = '';
+      }
+    }
+
+    function goToWebsite(event) {
+      event.stopPropagation();
+      const url = event.target.getAttribute('data-url');
+      window.open(url, '_blank');
+    }
+
+    const modalImage = document.getElementById('modalImage');
+    modalImage.addEventListener('mousemove', (event) => {
+      if (isZoomed) {
+        const rect = modalImage.getBoundingClientRect();
+        const mouseX = event.clientX - rect.left;
+        const mouseY = event.clientY - rect.top;
+        const moveX = (mouseX / rect.width) * 100;
+        const moveY = (mouseY / rect.height) * 100;
+        modalImage.style.transformOrigin = `${moveX}% ${moveY}%`;
+      }
+    });
+  </script>
+</body>
+</html>

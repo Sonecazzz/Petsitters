@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Website Item</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #222;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: none;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #00aced;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0084b4;
+    }
+    a {
+      color: #00aced;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>Add New Website Item</h1>
+  <form id="addItemForm">
+    <input type="text" id="title" placeholder="Website Title" required>
+    <input type="url" id="linkUrl" placeholder="Website URL" required>
+    <input type="url" id="imageUrl" placeholder="Image URL" required>
+    <textarea id="description" placeholder="Description (including price info)" required></textarea>
+    <button type="submit">Add Item</button>
+  </form>
+  <p><a href="index.html">Return to Main Page</a></p>
+
+  <script>
+    const form = document.getElementById('addItemForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Get form values
+      const title = document.getElementById('title').value;
+      const linkUrl = document.getElementById('linkUrl').value;
+      const imageUrl = document.getElementById('imageUrl').value;
+      const description = document.getElementById('description').value;
+      
+      // Create new item object
+      const newItem = { title, linkUrl, imageUrl, description };
+      
+      // Retrieve any existing items
+      const extraItems = JSON.parse(localStorage.getItem('extraItems')) || [];
+      extraItems.push(newItem);
+      localStorage.setItem('extraItems', JSON.stringify(extraItems));
+      
+      // Optionally, redirect back to main page
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
